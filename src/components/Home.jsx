@@ -17,7 +17,7 @@ const Home = () => {
 
   return (
     <section className="lg:w-9/12 md:w-[90%] w-[95%] mx-auto mt-12 flex flex-col md:flex-row-reverse justify-between items-center">
-      {loading && <Loading />}
+      {loading && <Loading text="Stay Seated, Stay Sharp. Starting Quiz In a moment!" />}
 
       <div className="md:w-1/2 w-full">
         <img src="/images/banner.png" alt="banner" className="w-full mx-auto" />
