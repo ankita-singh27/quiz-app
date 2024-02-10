@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import { IoMdClock } from "react-icons/io";
 
 const QuizHeader = ({timer,formatTime}) => {
     
@@ -14,9 +15,9 @@ const QuizHeader = ({timer,formatTime}) => {
         </div>
 
         <div className="flex flex-col items-center">
-          {/* <div className="mr-2 text-xl text-gray-700">
-            <i className="fa-solid fa-clock-rotate-left"></i>
-          </div> */}
+          <div className="mr-2 text-xl text-gray-700">
+           < IoMdClock />
+          </div>
             <h1 className="text-green-700 text-xl">
               {formatTime(timer)}
               <sub className="text-xs ml-1">sec</sub>

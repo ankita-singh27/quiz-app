@@ -9,17 +9,18 @@ const Quiz = () => {
   const [showResult, setShowResult] = useState(false);
   const [score, setScore] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [timer, setTimer] = useState(60); 
+  const [timer, setTimer] = useState(60);
   const [timerIntervalId, setTimerIntervalId] = useState(null);
   const [status, setStatus] = useState("");
 
   // Utility function to format time
-const formatTime = (seconds) => {
-  const minutes = Math.floor(seconds / 60);
-  const remainingSeconds = seconds % 60;
-  const formattedTime = `${String(minutes).padStart(2, "0")}:${String(remainingSeconds).padStart(2, "0")}`;
-  return formattedTime;
-};
+  const formatTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    const formattedTime =
+    `${String(minutes).padStart(2, "0")}:${String(remainingSeconds).padStart(2, "0")}`;
+    return formattedTime;
+  };
 
   useEffect(() => {
     fetch("/quiz.json")
@@ -27,7 +28,7 @@ const formatTime = (seconds) => {
       .then((data) => setQuestions(data))
       .catch((error) => console.error("Error fetching quiz data:", error));
 
-      // Set up the timer interval
+    // Set up the timer interval
     const intervalId = setInterval(() => {
       setTimer((prevTimer) => {
         // Check if the timer is greater than 0 before decrementing
@@ -35,12 +36,13 @@ const formatTime = (seconds) => {
       });
     }, 1000);
     setTimerIntervalId(intervalId);
- 
+
+    if (timer === 0) {
+      handleSubmit();
+    }
+
     return () => {
       clearInterval(intervalId);
-      if (timer <= 0) {
-        setShowResult(true);
-      }
     };
   }, [timer]);
 
@@ -93,8 +95,8 @@ const formatTime = (seconds) => {
 
   return (
     <section>
-     <QuizHeader timer={timer} formatTime={formatTime}/>
-      <div className="md:w-9/12 w-[90%] flex md:flex-row flex-col mx-auto">
+      <QuizHeader timer={timer} formatTime={formatTime} />
+      <div className="md:w-9/12 w-[90%] flex md:flex-row flex-col-reverse  mx-auto">
         {/* question section */}
         <div className="md:w-[70%] w-full">
           {questions.map((question, index) => (
@@ -134,9 +136,15 @@ const formatTime = (seconds) => {
           </button>
         </div>
         {/* answer  section*/}
-        {loading && <Loading text="Wait for a moment! It's Loading..." />}
+        {loading && <Loading text="Wait for a moment! Loading..." />}
         {showResult && (
-          <Result status={status} score={score} restartQuiz={restartQuiz} />
+          <Result
+            status={status}
+            score={score}
+            restartQuiz={restartQuiz}
+            formatTime={formatTime}
+            timer={timer}
+          />
         )}
       </div>
     </section>

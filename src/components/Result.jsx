@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Result = ({status,score,restartQuiz}) => {
+const Result = ({status,score,restartQuiz,formatTime, timer}) => {
   return (
          <div className=" md:w-[30%] w-full p-4">
               <h2 className="text-2xl font-medium">Your Score: </h2>
@@ -11,6 +11,14 @@ const Result = ({status,score,restartQuiz}) => {
                 <h1 className="text-3xl font-bold my-2 text-slate-800">
                   {score * 10} /60
                 </h1>
+
+                <div>
+                  Total Time:
+                  <span className="text-xl text-orange-500">
+                    {formatTime(60 - timer)}
+                    <span className="text-xs">sec</span>
+                  </span>
+                  </div>
               </div>
 
               <button
