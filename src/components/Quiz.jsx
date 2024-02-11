@@ -12,13 +12,15 @@ const Quiz = () => {
   const [timer, setTimer] = useState(60);
   const [timerIntervalId, setTimerIntervalId] = useState(null);
   const [status, setStatus] = useState("");
+  const [checkAnswer, setCheckAnswer] = useState(false);
 
   // Utility function to format time
   const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
-    const formattedTime =
-    `${String(minutes).padStart(2, "0")}:${String(remainingSeconds).padStart(2, "0")}`;
+    const formattedTime = `${String(minutes).padStart(2, "0")}:${String(
+      remainingSeconds
+    ).padStart(2, "0")}`;
     return formattedTime;
   };
 
@@ -49,8 +51,8 @@ const Quiz = () => {
   const handleAnswerSelect = (questionId, selectedOption) => {
     // Handle answer selection logic here
     const updatedAnswers = { ...answers, [questionId]: selectedOption };
-    //console.log(updatedAnswers);
     setAnswers(updatedAnswers);
+    //console.log(answers);
   };
 
   const handleSubmit = () => {
@@ -90,7 +92,13 @@ const Quiz = () => {
     setShowResult(false);
     setLoading(false);
     setTimer(60);
+    setCheckAnswer(false);
     //navigate("/quiz");
+  };
+
+  // Check your Answersheet
+  const viewAnswer = () => {
+    setCheckAnswer(true);
   };
 
   return (
@@ -125,6 +133,18 @@ const Quiz = () => {
                   </div>
                 ))}
               </div>
+              {checkAnswer && (
+                <div>
+                  <h2 className="mt-5">
+                    <span className="text-red-500">Correct Answer: </span>
+                    {question.answer}
+                  </h2>
+                  <h2 className="mt-5">
+                    <span className="text-green-800">description: </span>
+                    {question.description}
+                  </h2>
+                </div>
+              )}
             </div>
           ))}
 
@@ -144,6 +164,7 @@ const Quiz = () => {
             restartQuiz={restartQuiz}
             formatTime={formatTime}
             timer={timer}
+            viewAnswer={viewAnswer}
           />
         )}
       </div>
